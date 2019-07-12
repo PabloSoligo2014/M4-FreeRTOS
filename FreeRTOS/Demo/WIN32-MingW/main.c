@@ -57,6 +57,7 @@
 /* FreeRTOS kernel includes. */
 #include "FreeRTOS.h"
 #include "task.h"
+#include "AddTask.h"
 
 /* This project provides two demo applications.  A simple blinky style demo
 application, and a more comprehensive test and demo application.  The
@@ -143,8 +144,23 @@ int main( void )
 		uiTraceStart();
 	}
 	#endif
+	printf("Arrancando");
+	TaskHandle_t thThermalTlmyGenerator;
+	BaseType_t bt;
+	//Comenzamos nuestro desarrollo en este punto
 
-	//Comenzamos nuestro desarrollo en este punto!
+	bt = xTaskCreate(ThermalTlmyGenerator, (char*)"Sim.Subsistema Termico", configMINIMAL_STACK_SIZE*3, NULL, 5, &thThermalTlmyGenerator);
+	if(bt==pdFAIL){
+		printf("Error al crear la tarea termal");
+	}
+
+	vTaskStartScheduler();
+	const TickType_t xDelay = 5000 / portTICK_PERIOD_MS;
+	while(1){
+		//configASSERT(1);
+		//vTaskDelay(xDelay);
+
+	}
 
 
 	return 0;
