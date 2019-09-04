@@ -57,7 +57,9 @@
 /* FreeRTOS kernel includes. */
 #include "FreeRTOS.h"
 #include "task.h"
+#include "queue.h"
 #include "AddTask.h"
+#include "Globals.h"
 
 /* This project provides two demo applications.  A simple blinky style demo
 application, and a more comprehensive test and demo application.  The
@@ -68,11 +70,12 @@ The blinky demo is implemented and described in main_blinky.c.
 
 
 
-/* This demo uses heap_5.c, and these constants define the sizes of the regions
+This demo uses heap_5.c, and these constants define the sizes of the regions
 that make up the total heap.  heap_5 is only used for test and example purposes
 as this demo could easily create one large heap region instead of multiple
 smaller heap regions - in which case heap_4.c would be the more appropriate
 choice.  See http://www.freertos.org/a00111.html for an explanation. */
+
 #define mainREGION_1_SIZE	10801
 #define mainREGION_2_SIZE	29905
 #define mainREGION_3_SIZE	6007
@@ -132,6 +135,7 @@ int main( void )
 	http://www.freertos.org/a00111.html for an explanation. */
 	prvInitialiseHeap();
 	/* Do not include trace code when performing a code coverage analysis. */
+
 	#if( projCOVERAGE_TEST != 1 )
 	{
 		/* Initialise the trace recorder.  Use of the trace recorder is optional.
@@ -144,22 +148,38 @@ int main( void )
 		uiTraceStart();
 	}
 	#endif
-	printf("Arrancando");
-	TaskHandle_t thThermalTlmyGenerator;
-	BaseType_t bt;
-	//Comenzamos nuestro desarrollo en este punto
+	fflush( stdout );
 
-	bt = xTaskCreate(ThermalTlmyGenerator, (char*)"Sim.Subsistema Termico", configMINIMAL_STACK_SIZE*3, NULL, 5, &thThermalTlmyGenerator);
-	if(bt==pdFAIL){
-		printf("Error al crear la tarea termal");
+	xPrQueue = xQueueCreate( 50, sizeof(tPrMessage) );
+	if( xPrQueue == NULL ){
+		printf((portCHAR*)"Error al crear cola de prints\n");
+	}else{
+		printf((portCHAR*)"Continaudo\n");
+
 	}
 
-	vTaskStartScheduler();
-	const TickType_t xDelay = 5000 / portTICK_PERIOD_MS;
-	while(1){
-		//configASSERT(1);
-		//vTaskDelay(xDelay);
+	TaskHandle_t thThermalTlmyGenerator;
+	TaskHandle_t thDeQueue;
+	BaseType_t bt;
+	BaseType_t bp;
+	//Comenzamos nuestro desarrollo en este punto
 
+	bt = xTaskCreate(ThermalTlmyGenerator, (portCHAR*)"Sim.Subsistema Termico", configMINIMAL_STACK_SIZE*3, NULL, 5, &thThermalTlmyGenerator);
+	if(bt==pdFAIL){
+		printf((portCHAR*)"Error al crear la tarea termal");
+	}else{
+		bp = xTaskCreate(deQueue, (portCHAR*)"Desencolado de mensajes", configMINIMAL_STACK_SIZE*3, NULL, 5, &thDeQueue);
+		if(bp==pdFAIL){
+			printf((portCHAR*)"Error al crear la tarea print");
+		}else{
+			vTaskStartScheduler();
+			//const TickType_t xDelay = 5000 / portTICK_PERIOD_MS;
+			while(1){
+				//configASSERT(1);
+				//vTaskDelay(xDelay);
+
+			}
+		}
 	}
 
 
