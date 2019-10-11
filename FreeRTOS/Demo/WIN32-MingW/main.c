@@ -134,6 +134,10 @@ portCHAR* taskRedName 	= "Tarea Led Rojo";
 
 portCHAR* sgreen		= "Verde";
 portCHAR* taskGreenName	= "Tarea Led Verde";
+
+portCHAR* syellow		= "Amarillo";
+portCHAR* taskYellowName="Tarea Led Amarillo";
+
 int main( void )
 {
 	/* This demo uses heap_5.c, so start by defining some heap regions.  heap_5
@@ -175,10 +179,20 @@ int main( void )
 					taskGreenName,
 					128,
 					sgreen,
-					1,
+					4,
 					&th);
 	if(bt==pdFAIL){
 		vPrintString("Error al crear tarea led verde");
+	}
+
+	bt = xTaskCreate(&TaskBlinkLed,
+					taskYellowName,
+					128,
+					syellow,
+					2,
+					&th);
+	if(bt==pdFAIL){
+		vPrintString("Error al crear tarea led Amarillo");
 	}
 
 

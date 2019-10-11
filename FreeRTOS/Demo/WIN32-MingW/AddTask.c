@@ -29,18 +29,18 @@ void vPrintString(const portCHAR *pcString)
 
 void TaskBlinkLed(void* pvParameters){
 	portCHAR msg[50];
-	uint32_t i;
+	//uint32_t i;
 
 	for(;;){
 
 		sprintf(msg, "LED %s Encendido\n", (portCHAR*)pvParameters);
 		vPrintString(msg);
-		//vTaskDelay( 1000 / portTICK_PERIOD_MS );
-		for(i=0;i<500000000;i++){}
+		vTaskDelay( 1000 / portTICK_PERIOD_MS );
+		//for(i=0;i<500000000;i++){}
 		sprintf(msg, "LED %s Apagado\n", (portCHAR*)pvParameters);
 		vPrintString(msg);
-		for(i=0;i<500000000;i++){}
-		//vTaskDelay( 1000 / portTICK_PERIOD_MS );
+		//for(i=0;i<500000000;i++){}
+		vTaskDelay( 1000 / portTICK_PERIOD_MS );
 	}
 
 }
