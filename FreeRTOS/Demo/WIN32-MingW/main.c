@@ -128,6 +128,12 @@ static BaseType_t xTraceRunning = pdTRUE;
 
 /*-----------------------------------------------------------*/
 
+portCHAR* sred 			= "Rojo";
+portCHAR* taskRedName 	= "Tarea Led Rojo";
+
+
+portCHAR* sgreen		= "Verde";
+portCHAR* taskGreenName	= "Tarea Led Verde";
 int main( void )
 {
 	/* This demo uses heap_5.c, so start by defining some heap regions.  heap_5
@@ -148,40 +154,35 @@ int main( void )
 		uiTraceStart();
 	}
 	#endif
-	fflush( stdout );
-
-	xPrQueue = xQueueCreate( 50, sizeof(tPrMessage) );
-	if( xPrQueue == NULL ){
-		printf((portCHAR*)"Error al crear cola de prints\n");
-	}else{
-		printf((portCHAR*)"Continaudo\n");
-
-	}
-
-	TaskHandle_t thThermalTlmyGenerator;
-	TaskHandle_t thDeQueue;
-	BaseType_t bt;
-	BaseType_t bp;
 	//Comenzamos nuestro desarrollo en este punto
 
-	bt = xTaskCreate(ThermalTlmyGenerator, (portCHAR*)"Sim.Subsistema Termico", configMINIMAL_STACK_SIZE*3, NULL, 5, &thThermalTlmyGenerator);
-	if(bt==pdFAIL){
-		printf((portCHAR*)"Error al crear la tarea termal");
-	}else{
-		bp = xTaskCreate(deQueue, (portCHAR*)"Desencolado de mensajes", configMINIMAL_STACK_SIZE*3, NULL, 5, &thDeQueue);
-		if(bp==pdFAIL){
-			printf((portCHAR*)"Error al crear la tarea print");
-		}else{
-			vTaskStartScheduler();
-			//const TickType_t xDelay = 5000 / portTICK_PERIOD_MS;
-			while(1){
-				//configASSERT(1);
-				//vTaskDelay(xDelay);
+	vPrintString("Impresion por pantalla en seccion critica...");
+	//TaskHandle_t tlr;
+	BaseType_t bt;
+	TaskHandle_t th;
 
-			}
-		}
+	bt = xTaskCreate(&TaskBlinkLed,
+					taskRedName,
+					128,
+					sred ,
+					1,
+					&th);
+	if(bt==pdFAIL){
+		vPrintString("Error al crear tarea led rojo");
 	}
 
+	bt = xTaskCreate(&TaskBlinkLed,
+					taskGreenName,
+					128,
+					sgreen,
+					1,
+					&th);
+	if(bt==pdFAIL){
+		vPrintString("Error al crear tarea led verde");
+	}
+
+
+	vTaskStartScheduler();
 
 	return 0;
 }

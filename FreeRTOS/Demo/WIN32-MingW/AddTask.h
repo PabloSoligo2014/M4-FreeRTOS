@@ -7,9 +7,8 @@
 
 #ifndef ADDTASK_H_
 #define ADDTASK_H_
-
-void ThermalTlmyGenerator(void *pvParameters);
-void deQueue(void *pvParameters);
-
+#include "FreeRTOS.h"
+void vPrintString(const portCHAR*);
+void TaskBlinkLed(void* pvParameters);
 
 #endif /* ADDTASK_H_ */

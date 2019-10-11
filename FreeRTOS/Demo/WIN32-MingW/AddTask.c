@@ -7,44 +7,41 @@
 
 
 #include "AddTask.h"
-#include "FreeRTOS.h"
+
 #include "task.h"
 #include <stdio.h>
 #include <conio.h>
 #include "queue.h"
-#include "Globals.h"
+//#include "Globals.h"
 
-void ThermalTlmyGenerator(void *pvParameters)
+void vPrintString(const portCHAR *pcString)
 {
+	taskENTER_CRITICAL();
+	{
 
-	const TickType_t xDelay = 5000 / portTICK_PERIOD_MS;
-	tPrMessage msg;
-	(void)pvParameters;
-	while(1){
-		strcpy(msg.ucData, "Mensaje de test");
-
-		if( xQueueSend( xPrQueue, ( void * ) &msg, ( TickType_t ) 10 ) != pdPASS ){
-			/* Failed to post the message, even after 10 ticks. */
-			printf("Fallo al encolar\r\n");
-
-
-		}
-		vTaskDelay( xDelay );
-
+		printf( "%s", pcString );
+		fflush( stdout );
+		//Serial.println(pcString);
 	}
+	taskEXIT_CRITICAL();
+
 }
 
+void TaskBlinkLed(void* pvParameters){
+	portCHAR msg[50];
+	uint32_t i;
 
-void deQueue(void *pvParameters)
-{
-	const TickType_t xDelay = 5000 / portTICK_PERIOD_MS;
-	tPrMessage msg;
-	(void)pvParameters;
-	while(1){
-		if( xQueueReceive( xPrQueue, &msg, ( TickType_t ) 10 ) ){
-			printf("%s", (portCHAR*)msg.ucData);
-			fflush(stdout);
-		}
-		vTaskDelay( xDelay );
+	for(;;){
+
+		sprintf(msg, "LED %s Encendido\n", (portCHAR*)pvParameters);
+		vPrintString(msg);
+		//vTaskDelay( 1000 / portTICK_PERIOD_MS );
+		for(i=0;i<500000000;i++){}
+		sprintf(msg, "LED %s Apagado\n", (portCHAR*)pvParameters);
+		vPrintString(msg);
+		for(i=0;i<500000000;i++){}
+		//vTaskDelay( 1000 / portTICK_PERIOD_MS );
 	}
+
 }
+
