@@ -54,12 +54,15 @@
 #include <stdlib.h>
 #include <conio.h>
 
+#include <windows.h>
 /* FreeRTOS kernel includes. */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
+
 #include "AddTask.h"
 #include "Globals.h"
+
 
 /* This project provides two demo applications.  A simple blinky style demo
 application, and a more comprehensive test and demo application.  The
@@ -164,6 +167,10 @@ int main( void )
 	//TaskHandle_t tlr;
 	BaseType_t bt;
 	TaskHandle_t th;
+	xTlmySemaphore = xSemaphoreCreateBinary();
+
+	xTaskCreate(&vNewTelemetryInterrupt, (portCHAR*)"NewTelemetryInt", 128, NULL, 1, &th);
+	xTaskCreate(&vNewTelemetryReceived, (portCHAR*)"NewTelemetryRec", 128, NULL, 1, &th);
 
 	bt = xTaskCreate(&TaskBlinkLed,
 					taskRedName,
@@ -196,6 +203,7 @@ int main( void )
 	}
 
 
+	vPortSetInterruptHandler( mainINTERRUPT_NUMBER, ulExampleInterruptHandler);
 	vTaskStartScheduler();
 
 	return 0;
