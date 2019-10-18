@@ -155,23 +155,40 @@ int main( void )
 	}
 	#endif
 	//Comenzamos nuestro desarrollo en este punto
-	TaskHandle_t teah;
-	BaseType_t bt;
+	TaskHandle_t teahA;
+	TaskHandle_t teahB;
+	BaseType_t btA;
+	BaseType_t btB;
+
+	portCHAR ha[] = "Heater A";
+	portCHAR hb[] = "Heater B";
+
 
 	vPrintString("Impresion por pantalla en seccion critica...");
 
 
-	bt = xTaskCreate(vEncenderApagarHeater,
-				    (portCHAR*)"EncenderApagarHeater",
+	btA = xTaskCreate(vEncenderApagarHeater,
+				    (portCHAR*)"EncenderApagarHeaterA",
 					256,
-					NULL,
+					(portCHAR*)ha,
 					3,
-					&teah);
+					&teahA);
 
-	if(bt==pdFAIL){
+	if(btA==pdFAIL){
 		vPrintString("Error al crear tarea de encender apagar heater");
 	}
 
+
+	btB = xTaskCreate(vEncenderApagarHeater,
+				    (portCHAR*)"EncenderApagarHeater",
+					256,
+					(portCHAR*)hb,
+					3,
+					&teahB);
+
+	if(btB==pdFAIL){
+		vPrintString("Error al crear tarea de encender apagar heater");
+	}
 
 	//Finalizamos desarrollo del programa principal en este punto.
 

@@ -12,10 +12,14 @@
 
 void vEncenderApagarHeater(void* pvParameters){
 	(void)pvParameters;
-	portCHAR msgEnc[] = "Encender Heater\n";
-	portCHAR msgApg[] = "Apagar Heater\n";
+	portCHAR msgEnc[50] = "Encender ";
+	portCHAR msgApg[50] = "Apagar ";
 	uint64_t i;
 
+	strcat(msgEnc, pvParameters);
+	strcat(msgEnc, "\n");
+	strcat(msgApg, pvParameters);
+	strcat(msgApg, "\n");
 	for(;;){
 		vPrintString(msgEnc);
 		for(i=0;i<100000000;i++);
