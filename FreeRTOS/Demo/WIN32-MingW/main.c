@@ -171,7 +171,7 @@ int main( void )
 				    (portCHAR*)"EncenderApagarHeaterA",
 					256,
 					(portCHAR*)ha,
-					3,
+					5,
 					&teahA);
 
 	if(btA==pdFAIL){

@@ -6,6 +6,7 @@
  */
 
 #include "FreeRTOS.h"
+#include "Task.h"
 #include "DebugIO.h"
 #include "MTasks.h"
 
@@ -14,7 +15,7 @@ void vEncenderApagarHeater(void* pvParameters){
 	(void)pvParameters;
 	portCHAR msgEnc[50] = "Encender ";
 	portCHAR msgApg[50] = "Apagar ";
-	uint64_t i;
+	//uint64_t i;
 
 	strcat(msgEnc, pvParameters);
 	strcat(msgEnc, "\n");
@@ -22,9 +23,9 @@ void vEncenderApagarHeater(void* pvParameters){
 	strcat(msgApg, "\n");
 	for(;;){
 		vPrintString(msgEnc);
-		for(i=0;i<100000000;i++);
+		vTaskDelay(pdMS_TO_TICKS(500));
 		vPrintString(msgApg);
-		for(i=0;i<100000000;i++);
+		vTaskDelay(pdMS_TO_TICKS(500));
 	}
 
 }
