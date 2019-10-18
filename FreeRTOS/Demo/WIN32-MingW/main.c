@@ -129,15 +129,6 @@ static BaseType_t xTraceRunning = pdTRUE;
 
 /*-----------------------------------------------------------*/
 
-portCHAR* sred 			= "Rojo";
-portCHAR* taskRedName 	= "Tarea Led Rojo";
-
-
-portCHAR* sgreen		= "Verde";
-portCHAR* taskGreenName	= "Tarea Led Verde";
-
-portCHAR* syellow		= "Amarillo";
-portCHAR* taskYellowName="Tarea Led Amarillo";
 
 int main( void )
 {
@@ -166,6 +157,8 @@ int main( void )
 
 
 	vTaskStartScheduler();
+
+	//Finalizamos desarrollo del programa principal en este punto.
 
 	return 0;
 }
