@@ -60,9 +60,7 @@
 #include "task.h"
 #include "queue.h"
 
-#include "AddTask.h"
-#include "Globals.h"
-
+#include "DebugIO.h"
 
 /* This project provides two demo applications.  A simple blinky style demo
 application, and a more comprehensive test and demo application.  The
@@ -164,46 +162,9 @@ int main( void )
 	//Comenzamos nuestro desarrollo en este punto
 
 	vPrintString("Impresion por pantalla en seccion critica...");
-	//TaskHandle_t tlr;
-	BaseType_t bt;
-	TaskHandle_t th;
-	xTlmySemaphore = xSemaphoreCreateBinary();
-
-	xTaskCreate(&vNewTelemetryInterrupt, (portCHAR*)"NewTelemetryInt", 128, NULL, 1, &th);
-	xTaskCreate(&vNewTelemetryReceived, (portCHAR*)"NewTelemetryRec", 128, NULL, 1, &th);
-
-	bt = xTaskCreate(&TaskBlinkLed,
-					taskRedName,
-					128,
-					sred ,
-					1,
-					&th);
-	if(bt==pdFAIL){
-		vPrintString("Error al crear tarea led rojo");
-	}
-
-	bt = xTaskCreate(&TaskBlinkLed,
-					taskGreenName,
-					128,
-					sgreen,
-					4,
-					&th);
-	if(bt==pdFAIL){
-		vPrintString("Error al crear tarea led verde");
-	}
-
-	bt = xTaskCreate(&TaskBlinkLed,
-					taskYellowName,
-					128,
-					syellow,
-					2,
-					&th);
-	if(bt==pdFAIL){
-		vPrintString("Error al crear tarea led Amarillo");
-	}
 
 
-	vPortSetInterruptHandler( mainINTERRUPT_NUMBER, ulExampleInterruptHandler);
+
 	vTaskStartScheduler();
 
 	return 0;
