@@ -128,16 +128,11 @@ StackType_t uxTimerTaskStack[ configTIMER_TASK_STACK_DEPTH ];
 static BaseType_t xTraceRunning = pdTRUE;
 
 /*-----------------------------------------------------------*/
+#include "MTasks.h"
 
-portCHAR* sred 			= "Rojo";
-portCHAR* taskRedName 	= "Tarea Led Rojo";
+#define ENC_HEATER "Encender Heater";
+#define APG_HEATER "Apagar Heater";
 
-
-portCHAR* sgreen		= "Verde";
-portCHAR* taskGreenName	= "Tarea Led Verde";
-
-portCHAR* syellow		= "Amarillo";
-portCHAR* taskYellowName="Tarea Led Amarillo";
 
 int main( void )
 {
@@ -154,16 +149,31 @@ int main( void )
 		vTraceEnable( TRC_START );
 		/* Start the trace recording - the recording is written to a file if
 		configASSERT() is called. */
-		printf( "\r\nTrace started.\r\nThe trace will be dumped to disk if a call to configASSERT() fails.\r\n" );
-		printf( "Uncomment the call to kbhit() in this file to also dump trace with a key press.\r\n" );
+		//printf( "\r\nTrace started.\r\nThe trace will be dumped to disk if a call to configASSERT() fails.\r\n" );
+		//printf( "Uncomment the call to kbhit() in this file to also dump trace with a key press.\r\n" );
 		uiTraceStart();
 	}
 	#endif
 	//Comenzamos nuestro desarrollo en este punto
+	TaskHandle_t teah;
+	BaseType_t bt;
 
 	vPrintString("Impresion por pantalla en seccion critica...");
 
 
+	bt = xTaskCreate(vEncenderApagarHeater,
+				    (portCHAR*)"EncenderApagarHeater",
+					256,
+					NULL,
+					3,
+					&teah);
+
+	if(bt==pdFAIL){
+		vPrintString("Error al crear tarea de encender apagar heater");
+	}
+
+
+	//Finalizamos desarrollo del programa principal en este punto.
 
 	vTaskStartScheduler();
 
