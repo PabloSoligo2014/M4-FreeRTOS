@@ -129,7 +129,7 @@ static BaseType_t xTraceRunning = pdTRUE;
 
 /*-----------------------------------------------------------*/
 #include "MTasks.h"
-
+#include "Globals.h"
 #define ENC_HEATER "Encender Heater";
 #define APG_HEATER "Apagar Heater";
 
@@ -161,11 +161,18 @@ int main( void )
 	BaseType_t btB;
 
 	portCHAR ha[] = "Heater A";
-	portCHAR hb[] = "Heater B";
+	portCHAR hb[] = "Nueva temp";
 
 
 	vPrintString("Impresion por pantalla en seccion critica...");
 
+
+
+	xPrQueue = xQueueCreate(10, sizeof(float));
+	if (!xPrQueue){
+		vPrintString("La cola no ha sido creada");
+		return 1;
+	}
 
 	btA = xTaskCreate(vEncenderApagarHeater,
 				    (portCHAR*)"EncenderApagarHeaterA",
@@ -178,17 +185,19 @@ int main( void )
 		vPrintString("Error al crear tarea de encender apagar heater");
 	}
 
-
-	btB = xTaskCreate(vEncenderApagarHeater,
-				    (portCHAR*)"EncenderApagarHeater",
+	btB = xTaskCreate(vNewTemperature,
+					(portCHAR*)hb,
 					256,
 					(portCHAR*)hb,
-					3,
+					5,
 					&teahB);
 
 	if(btB==pdFAIL){
-		vPrintString("Error al crear tarea de encender apagar heater");
+			vPrintString("Error al crear tarea de interrupciones");
 	}
+
+	vPortSetInterruptHandler(NEW_TEMP_INTERRUPT, ulTempInterruptHandler);
+
 
 	//Finalizamos desarrollo del programa principal en este punto.
 
