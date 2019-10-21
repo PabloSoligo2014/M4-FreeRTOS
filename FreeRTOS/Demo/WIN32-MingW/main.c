@@ -59,7 +59,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
-
+#include "SimulatedInterrupt.h"
 #include "DebugIO.h"
 
 /* This project provides two demo applications.  A simple blinky style demo
@@ -151,8 +151,8 @@ int main( void )
 	}
 	#endif
 	//Comenzamos nuestro desarrollo en este punto
+	vPrintString("Impresion por pantalla en seccion critica...\n");
 
-	vPrintString("Impresion por pantalla en seccion critica...");
 
 
 
