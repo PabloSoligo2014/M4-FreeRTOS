@@ -8,16 +8,11 @@
 #ifndef GLOBALS_H_
 #define GLOBALS_H_
 #include "FreeRTOS.h"
-#include "semphr.h"
-typedef struct
-{
-    char ucData[ 128 ];
-}tPrMessage;
-
+#include "queue.h"
 
 QueueHandle_t xPrQueue;
 
-SemaphoreHandle_t xTlmySemaphore;
+//SemaphoreHandle_t xTlmySemaphore;
 
 
 

@@ -61,7 +61,9 @@
 #include "queue.h"
 #include "SimulatedInterrupt.h"
 #include "DebugIO.h"
-
+#include "MTasks.h"
+#include "IHandlers.h"
+#include "Globals.h"
 /* This project provides two demo applications.  A simple blinky style demo
 application, and a more comprehensive test and demo application.  The
 mainCREATE_SIMPLE_BLINKY_DEMO_ONLY setting is used to select between the two.
@@ -153,8 +155,34 @@ int main( void )
 	//Comenzamos nuestro desarrollo en este punto
 	vPrintString("Impresion por pantalla en seccion critica...\n");
 
+	xPrQueue = xQueueCreate(10, sizeof(float));
+
+	char msg[]  = "Heater 1\n";
+	TaskHandle_t thmg;
 
 
+	if (xTaskCreate(vManageHeaters,
+				"Heaters",
+				128,
+				msg,
+				4,
+				&thmg)==pdFAIL){
+
+		vPrintString("No se pudo crear la tarea administradora de heaters");
+	}
+
+
+	if (xTaskCreate(vSimulaterTemperatureInterruptTask,
+				"Interrupciones",
+				128,
+				NULL,
+				6,
+				NULL)==pdFAIL){
+
+		vPrintString("No se pudo crear la tarea simuladora de interr");
+	}
+
+	vPortSetInterruptHandler(NEW_TEMP_INTERRUPT, ulTempInteHandler);
 
 	vTaskStartScheduler();
 
