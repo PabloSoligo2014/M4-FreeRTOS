@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="CBFreeRTOS" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/CBFreeRTOS" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="1" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DprojCOVERAGE_TEST=0" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/CBFreeRTOS" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-DprojCOVERAGE_TEST=0" />
+			<Add directory="../../Source/include" />
+			<Add directory="../WIN32-MingW" />
+			<Add directory="../../Source/portable/MSVC-MingW" />
+			<Add directory="../../Source" />
+			<Add directory="../../Source/portable/Common" />
+			<Add directory="../../Source/portable/MemMang" />
+			<Add directory="../../../FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/Include" />
+			<Add directory="../../../FreeRTOS-Plus/Demo/FreeRTOS_Plus_CLI_with_Trace_Windows_Simulator/Trace_Recorder_Configuration" />
+		</Compiler>
+		<Linker>
+			<Add option="-lwinmm" />
+		</Linker>
+		<Unit filename="../../../FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/Include/trcRecorder.h" />
+		<Unit filename="../../../FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcKernelPort.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../../FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../../FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcStreamingRecorder.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/croutine.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/event_groups.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/list.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/portable/MSVC-MingW/port.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/portable/MSVC-MingW/portmacro.h" />
+		<Unit filename="../../Source/portable/MemMang/heap_5.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/queue.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/stream_buffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/tasks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/timers.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="DebugIO.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="DebugIO.h" />
+		<Unit filename="FreeRTOSConfig.h" />
+		<Unit filename="Globals.h" />
+		<Unit filename="IHandlers.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="IHandlers.h" />
+		<Unit filename="MTasks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="MTasks.h" />
+		<Unit filename="Run-time-stats-utils.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="SimulatedInterrupt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="SimulatedInterrupt.h" />
+		<Unit filename="code_coverage_additions.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>
