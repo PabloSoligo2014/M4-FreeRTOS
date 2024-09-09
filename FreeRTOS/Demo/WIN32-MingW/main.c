@@ -97,14 +97,7 @@ int main( void )
 	}
 	#endif
 	//Comenzamos nuestro desarrollo en este punto
-	vSecurePrintf("Impresion por pantalla en seccion critica...\n");
-
-
-	//TaskHandle_t thmg;
-
-
-	//vPortSetInterruptHandler(NEW_TEMP_INTERRUPT, ulTempInteHandler);
-
+	
 	vTaskStartScheduler();
 
 	//Finalizamos desarrollo del programa principal en este punto.
