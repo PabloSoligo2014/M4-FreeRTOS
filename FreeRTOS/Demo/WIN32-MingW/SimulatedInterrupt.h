@@ -2,7 +2,7 @@
  * SimulatedInterrupt.h
  *
  *  Created on: 21 oct. 2019
- *      Author: pabli
+ *      Author: pablo
  */
 
 #ifndef SIMULATEDINTERRUPT_H_
