@@ -2,7 +2,7 @@
  * DebugIO.h
  *
  *  Created on: 18 oct. 2019
- *      Author: pabli
+ *      Author: pablo
  */
 
 #ifndef DEBUGIO_H_
